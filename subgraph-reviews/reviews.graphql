@@ -1,0 +1,38 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@shareable"])
+  
+# schema entry points
+type Query {
+  latestReviews: [Review!]! # Reviews subgraph
+}
+
+type Mutation {
+  submitReview(locationReview: LocationReviewInput): SubmitReviewResponse # ✅ Reviews subgraph
+}
+
+# type definitions
+type Location @key(fields: "id") {
+  id: ID! # ✅ Locations subgraph
+  reviewsForLocation: [Review]! # Reviews subgraph
+  overallRating: Float # Reviews subgraph
+}
+
+type Review @key(fields: "id") { # ✅ Reviews subgraph
+  id: ID! # ✅ Reviews subgraph
+  comment: String # ✅ Reviews subgraph
+  rating: Int # ✅ Reviews subgraph
+  location: Location # ✅ Reviews subgraph
+}
+
+input LocationReviewInput { # ✅ Reviews subgraph
+  comment: String! # ✅ Reviews subgraph
+  rating: Int! # ✅ Reviews subgraph
+  locationId: String! # ✅ Reviews subgraph
+}
+
+type SubmitReviewResponse { # ✅ Reviews subgraph
+  code: Int! # ✅ Reviews subgraph
+  success: Boolean! # ✅ Reviews subgraph
+  message: String! # ✅ Reviews subgraph
+  locationReview: Review # ✅ Reviews subgraph
+}

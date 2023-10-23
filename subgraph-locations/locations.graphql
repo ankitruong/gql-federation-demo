@@ -1,0 +1,19 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@key", "@shareable"])
+
+type Query {
+  locations: [Location!]! # ✅ Locations subgraph
+  location(id: ID!): Location # ✅ Locations subgraph
+}
+
+type Location @key(fields: "id") { # ✅ Locations subgraph
+  id: ID! # ✅ Locations subgraph
+  name: String! # ✅ Locations subgraph
+  description: String! # ✅ Locations subgraph
+  photo: String! # ✅ Locations subgraph
+}
+
+type Review @key(fields: "id") {
+  id: ID! # Reviews subgraph
+  # location: Location # Reviews subgraph
+}
